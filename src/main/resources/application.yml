@@ -1,0 +1,25 @@
+#datasourse config
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 12345678
+
+#liquibase config
+  liquibase:
+    change-log: classpath:db/changelog/db-changelog-master.xml
+
+#jpa config
+  jpa:
+    hibernate:
+      ddl-auto:  none
+    show-sql: true
+
+#external services
+services:
+  external:
+    apiNumber:
+      url: http://localhost:8081/api/v1/getRandomNumber
+    apiLabel:
+      url: http://localhost:8081/api/v1/getRandomUuid

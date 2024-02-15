@@ -1,0 +1,28 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="003" author="Pavel Shutov">
+        <createTable tableName="PARCEL">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="PARCEL_NUMBER" type="INTEGER"/>
+            <column name="PARCEL_LABEL" type="VARCHAR(255)"/>
+            <column name="WEIGHT" type="DOUBLE"/>
+            <column name="LENGTH" type="DOUBLE"/>
+            <column name="WIDTH" type="DOUBLE"/>
+            <column name="HEIGHT" type="DOUBLE"/>
+            <column name="PARCEL_STATUS" type="VARCHAR(255)"/>
+            <column name="ORDER_ID" type="BIGINT">
+                <constraints foreignKeyName="order_fk"
+                             referencedTableName="ORDER"
+                             referencedColumnNames="ID"
+                             nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

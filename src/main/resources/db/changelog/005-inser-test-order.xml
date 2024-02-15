@@ -1,0 +1,17 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="005" author="Pavel Shutov">
+        <sql>INSERT INTO "ORDERS" (ORDER_NUMBER, SENDER_NAME, RECEIVER_NAME, SENDER_COUNTRY, SENDER_CITY,
+                                  SENDER_STREET, SENDER_HOUSE, SENDER_FLAT, SENDER_INDEX, RECEIVER_COUNTRY,
+                                  RECEIVER_CITY,
+                                  RECEIVER_STREET, RECEIVER_HOUSE, RECEIVER_FLAT, RECEIVER_INDEX, DATA_CREATE,
+                                  ORDER_STATUS,
+                                  USER_ID, COURIER_ID)
+             VALUES (54321, 'Vadim Smirnov', 'Petr Petrov', 'Belarus',
+                     'Gomel', 'Sovetskya', '456', '2', '123456', 'Belarus', 'Minsk', 'Borovai', '123',
+                     '1', '123478', '2024-02-13', 'IN_PROGRESS', 2, 2);</sql>
+    </changeSet>
+</databaseChangeLog>

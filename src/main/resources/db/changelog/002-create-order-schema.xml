@@ -1,0 +1,70 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.19.xsd">
+
+    <changeSet id="002" author="Pavel Shutov">
+        <createTable tableName="ORDER">
+            <column name="ID" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="ORDER_NUMBER" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENDER_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RECEIVER_NAME" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENDER_COUNTRY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENDER_CITY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENDER_STREET" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENDER_HOUSE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENDER_FLAT" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SENDER_INDEX" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RECEIVER_COUNTRY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RECEIVER_CITY" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RECEIVER_STREET" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RECEIVER_HOUSE" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RECEIVER_FLAT" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="RECEIVER_INDEX" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DATA_CREATE" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ORDER_STATUS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_ID" type="BIGINT">
+                <constraints foreignKeyName="user_fk"
+                             referencedTableName="USERS"
+                             referencedColumnNames="ID"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

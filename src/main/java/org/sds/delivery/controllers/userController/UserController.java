@@ -5,58 +5,50 @@ import lombok.RequiredArgsConstructor;
 import org.sds.delivery.dto.requests.userRequest.CreateUserRequest;
 import org.sds.delivery.dto.requests.userRequest.UpdateUserRequest;
 import org.sds.delivery.dto.responses.userResponse.UserDeleteResponse;
-import org.sds.delivery.dto.responses.userResponse.UserResponse;
+import org.sds.delivery.dto.responses.userResponse.UserDto;
 import org.sds.delivery.dto.responses.userResponse.UserUpdateResponse;
 import org.sds.delivery.services.userService.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/user")
-@Validated
 public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{id}")
-    @ResponseStatus(OK)
-    public UserResponse getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    @GetMapping("{userId}")
+    public UserDto getUserById(@PathVariable Long userId) {
+        return userService.getUserById(userId);
     }
 
-    @GetMapping("/getUserLogin/{userLogin}")
-    @ResponseStatus(OK)
-    public @ResponseBody UserResponse getUserByLogin(@PathVariable String userLogin){
+    @GetMapping("login/{userLogin}")
+    public UserDto getUserByLogin(@PathVariable String userLogin) {
         return userService.getUserByLogin(userLogin);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public @ResponseBody UserResponse createUser(@RequestBody @Valid CreateUserRequest request) {
+    public UserDto createUser(@Valid @RequestBody CreateUserRequest request) {
         return userService.createUser(request);
     }
 
-    @PatchMapping("/{id}")
-    @ResponseStatus(OK)
-    public @ResponseBody UserUpdateResponse updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest request) {
-        return userService.updateUser(id, request);
+    @PatchMapping("{userId}")
+    public UserUpdateResponse updateUser(@PathVariable Long userId, @Valid @RequestBody UpdateUserRequest request) {
+        return userService.updateUser(userId, request);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(OK)
-    public @ResponseBody UserDeleteResponse deleteUser(@PathVariable Long id) {
-        return userService.deleteUser(id);
+    @DeleteMapping("{userId}")
+    public UserDeleteResponse deleteUser(@PathVariable Long userId) {
+        return userService.deleteUser(userId);
     }
 
-    @GetMapping("getUsers")
-    @ResponseStatus(OK)
-    public List<UserResponse> getAllUsers() {
+    @GetMapping("users")
+    public List<UserDto> getAllUsers() {
         return userService.getAllUsers();
     }
 }

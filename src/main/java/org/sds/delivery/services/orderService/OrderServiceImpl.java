@@ -6,7 +6,7 @@ import org.sds.delivery.dto.requests.orderRequest.CreateOrderRequest;
 import org.sds.delivery.dto.requests.orderRequest.UpdateOrderRequest;
 import org.sds.delivery.dto.responses.orderResponse.CancelOrderResponse;
 import org.sds.delivery.dto.responses.orderResponse.CreateOrderResponse;
-import org.sds.delivery.dto.responses.orderResponse.OrderResponse;
+import org.sds.delivery.dto.responses.orderResponse.OrderDto;
 import org.sds.delivery.entities.Order;
 import org.sds.delivery.entities.User;
 import org.sds.delivery.exceptions.OrderNotFoundException;
@@ -29,42 +29,42 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public OrderResponse getOrderById(Long orderId) {
+    public OrderDto getOrderById(Long orderId) {
         Order order = orderRepository.getOrderById(orderId)
                 .orElseThrow(() -> new OrderNotFoundException(orderId.toString()));
-        return orderMapper.orderToOrderResponse(order);
+        return orderMapper.mapOrderToOrderResponse(order);
     }
 
     @Override
     @Transactional
-    public CreateOrderResponse createOrder(Long id, CreateOrderRequest createOrderRequest) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id.toString()));
+    public CreateOrderResponse createOrder(Long userId, CreateOrderRequest createOrderRequest) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId.toString()));
         Order order = orderMapper.parcelToParcelDTO(createOrderRequest);
         order.setUser(user);
         orderRepository.save(order);
-        return orderMapper.orderToCreateOrderResponse(order);
+        return orderMapper.mapOrderToCreateOrderResponse(order);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<OrderResponse> getOrdersByUserId(Long userId) {
+    public List<OrderDto> getOrdersByUserId(Long userId) {
         List<Order> ordersByUserId = orderRepository.getOrdersByUserId(userId);
-        return orderMapper.orderToOrdersResponse(ordersByUserId);
+        return orderMapper.mapOrderToOrdersResponse(ordersByUserId);
     }
 
     @Override
     @Transactional
     public CancelOrderResponse cancelOrder(Long userId, CancelOrderRequest request) {
-        orderRepository.updateOrderByUserIdAndOrderNumberAndStatusIn(userId, request.getOrderNumber());
+        orderRepository.updateOrderStatusByUserIdAndOrderNumberAndStatusInWorkOrCreated(userId, request.getOrderNumber());
         return new CancelOrderResponse(request.getOrderNumber());
     }
 
     @Override
     @Transactional
     public void updateOrder(Long orderId, UpdateOrderRequest request) {
-        Order order = orderMapper.updateOrderRequestToParcel(orderId, request);
-        order.setId(orderId);
-        orderRepository.save(order);
+        Order order = orderRepository.getOrderById(orderId)
+                .orElseThrow(() -> new OrderNotFoundException(orderId.toString()));
+        orderMapper.mapUpdateOrderRequestToOrder(request, order);
     }
 }

@@ -5,13 +5,15 @@ import org.mapstruct.Mapping;
 import org.sds.delivery.dto.requests.parcelRequest.AddParcelRequest;
 import org.sds.delivery.dto.responses.parcelResponse.AddParcelResponse;
 import org.sds.delivery.entities.Parcel;
-import org.sds.delivery.entities.ParcelStatus;
+import org.sds.delivery.enums.ParcelStatus;
 
 @Mapper(componentModel = "spring")
 public interface ParcelMapper {
     @Mapping(target = "parcelStatus", expression = "java(getDefaultStatus())")
-    Parcel ParcelRequestToParcel(AddParcelRequest request);
-    AddParcelResponse parcelToAddParcelResponse(Parcel parcel);
+    Parcel mapParcelRequestToParcel(AddParcelRequest request);
+
+    AddParcelResponse mapParcelToAddParcelResponse(Parcel parcel);
+
     default ParcelStatus getDefaultStatus() {
         return ParcelStatus.NOT_REGISTERED;
     }

@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sds.delivery.enums.OrderStatus;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.*;
 
 @Data
 @Builder
@@ -20,7 +22,8 @@ import static jakarta.persistence.EnumType.STRING;
 @Table(name = "ORDERS")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "ID", nullable = false)
     private Long id;
     @Column(name = "ORDER_NUMBER")
     private Integer orderNumber;
@@ -55,10 +58,10 @@ public class Order {
     @Enumerated(STRING)
     private OrderStatus orderStatus;
 
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order")
     private List<Parcel> parcels;
 
     @ManyToOne(cascade = ALL)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "id")
+    @JoinColumn(name = "USER_ID")
     private User user;
 }

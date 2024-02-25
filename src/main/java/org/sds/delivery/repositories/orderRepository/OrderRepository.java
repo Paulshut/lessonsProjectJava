@@ -8,6 +8,5 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long>, OrderRepositoryCustom {
     List<Order> getOrdersByUserId(Long userId);
-
     Optional<Order> getOrderById(Long parcelId);
 }

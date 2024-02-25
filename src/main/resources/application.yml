@@ -19,7 +19,7 @@ spring:
 #external services
 services:
   external:
-    apiNumber:
-      url: http://localhost:8081/api/v1/getRandomNumber
-    apiLabel:
-      url: http://localhost:8081/api/v1/getRandomUuid
+    parcelApi:
+      url: http://localhost:8081/api/v1/getParcelNumber
+    labelApi:
+      url: http://localhost:8081/api/v1/getLabel

@@ -1,6 +1,5 @@
 package org.sds.delivery.dto.requests.parcelRequest;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;

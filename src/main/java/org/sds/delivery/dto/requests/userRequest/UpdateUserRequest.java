@@ -1,25 +1,27 @@
 package org.sds.delivery.dto.requests.userRequest;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Null;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UpdateUserRequest {
-    @Null
+    @NotBlank
     private String name;
 
-    @Null
+    @NotBlank
     private String surname;
 
-    @Null
     @Email
     private String email;
 
-    @Null
     @Pattern(regexp = "^\\+\\d{12}$")
     private String contactPhone;
 }

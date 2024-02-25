@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sds.delivery.enums.ParcelStatus;
 
 import java.util.UUID;
 
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.*;
 
 @Data
 @Builder
@@ -18,7 +20,8 @@ import static jakarta.persistence.EnumType.STRING;
 @Table(name = "PARCEL")
 public class Parcel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "ID", nullable = false)
     private Long id;
     @Column(name = "PARCEL_NUMBER")
     private Integer parcelNumber;
@@ -35,7 +38,6 @@ public class Parcel {
     @Enumerated(STRING)
     private ParcelStatus parcelStatus;
     @ManyToOne
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "id")
+    @JoinColumn(name = "ORDER_ID")
     private Order order;
-
 }

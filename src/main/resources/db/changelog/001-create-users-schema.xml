@@ -6,29 +6,17 @@
     <changeSet id="001" author="Pavel Shutov">
         <createTable tableName="USERS">
             <column name="ID" type="BIGINT">
-            <constraints primaryKey="true" nullable="false"/>
+            <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
             <column name="EMAIL" type="VARCHAR(255)">
-                <constraints nullable="true"/>
+                <constraints nullable="false"/>
             </column>
-            <column name="LOGIN" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="PASSWORD" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="NAME" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="SURNAME" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="PHONE" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
-            <column name="ROLE_USER" type="VARCHAR(255)">
-                <constraints nullable="true"/>
-            </column>
+            <column name="LOGIN" type="VARCHAR(255)"/>
+            <column name="PASSWORD" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="SURNAME" type="VARCHAR(255)"/>
+            <column name="PHONE" type="VARCHAR(255)"/>
+            <column name="ROLE_USER" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

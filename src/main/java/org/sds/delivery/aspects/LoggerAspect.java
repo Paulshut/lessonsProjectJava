@@ -1,7 +1,5 @@
 package org.sds.delivery.aspects;
 
-import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -17,6 +15,7 @@ public class LoggerAspect {
     private static final String LOG_REQUEST_PATTERN = "{} -> {}: {} - {}";
     private static final String LOG_RESPONSE_PATTERN = "{} -> {}: {}, response: {}";
     private static final String LOG_EXCEPTION_PATTERN = "{} -> {}: {}, exception: {}";
+
     @Pointcut("execution(* org.sds.delivery.controllers..*(..))")
     public void pointCut() {
     }
@@ -30,8 +29,9 @@ public class LoggerAspect {
                 request.getRequestURI(),
                 joinPoint.getArgs());
     }
+
     @AfterReturning(value = "pointCut()", returning = "response")
-    public void logResponse(JoinPoint joinPoint, Object response){
+    public void logResponse(JoinPoint joinPoint, Object response) {
         HttpServletRequest request = getRequest();
         log.info(LOG_RESPONSE_PATTERN,
                 request.getMethod(),
@@ -39,8 +39,9 @@ public class LoggerAspect {
                 request.getRequestURI(),
                 response);
     }
+
     @AfterThrowing(value = "pointCut()", throwing = "exception")
-    public void logException(JoinPoint joinPoint, Exception exception){
+    public void logException(JoinPoint joinPoint, Exception exception) {
         HttpServletRequest request = getRequest();
         log.warn(LOG_EXCEPTION_PATTERN,
                 request.getMethod(),
@@ -48,7 +49,8 @@ public class LoggerAspect {
                 request.getRequestURI(),
                 exception.toString());
     }
-    private HttpServletRequest getRequest(){
+
+    private HttpServletRequest getRequest() {
         return ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
     }
 }

@@ -1,18 +1,19 @@
 package org.sds.delivery.controllers.orderController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.sds.delivery.dto.requests.orderRequest.CreateOrderRequest;
 import org.sds.delivery.dto.requests.orderRequest.CancelOrderRequest;
+import org.sds.delivery.dto.requests.orderRequest.CreateOrderRequest;
 import org.sds.delivery.dto.requests.orderRequest.UpdateOrderRequest;
 import org.sds.delivery.dto.responses.orderResponse.CancelOrderResponse;
 import org.sds.delivery.dto.responses.orderResponse.CreateOrderResponse;
-import org.sds.delivery.dto.responses.orderResponse.OrderResponse;
+import org.sds.delivery.dto.responses.orderResponse.OrderDto;
 import org.sds.delivery.services.orderService.OrderService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,32 +21,29 @@ import static org.springframework.http.HttpStatus.*;
 public class OrderController {
     private final OrderService orderService;
 
-    @GetMapping("/{orderId}")
-    @ResponseStatus(OK)
-    public OrderResponse getParcelById(@PathVariable Long orderId) {
+    @GetMapping("{orderId}")
+    public OrderDto getOrderById(@PathVariable Long orderId) {
         return orderService.getOrderById(orderId);
     }
 
-    @GetMapping("/getOrders/{userId}")
-    @ResponseStatus(OK)
-    public @ResponseBody List<OrderResponse> getParcelByUserId(@PathVariable Long userId) {
+    @GetMapping("user/{userId}")
+    public List<OrderDto> getOrderByUserId(@PathVariable Long userId) {
         return orderService.getOrdersByUserId(userId);
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping("{userId}")
     @ResponseStatus(CREATED)
-    public @ResponseBody CreateOrderResponse createOrder(@PathVariable Long userId, @RequestBody CreateOrderRequest request) {
+    public CreateOrderResponse createOrder(@PathVariable Long userId, @Valid @RequestBody CreateOrderRequest request) {
         return orderService.createOrder(userId, request);
     }
 
-    @PatchMapping("/cancelOrder/{userId}")
-    public @ResponseBody CancelOrderResponse cancelOrder(@PathVariable Long userId, @RequestBody CancelOrderRequest request) {
+    @PatchMapping("user/{userId}")
+    public CancelOrderResponse cancelOrder(@PathVariable Long userId, @Valid @RequestBody CancelOrderRequest request) {
         return orderService.cancelOrder(userId, request);
     }
 
-    @PatchMapping("/{orderId}")
-    @ResponseStatus(OK)
-    public void updateOrder(@PathVariable Long orderId, @RequestBody UpdateOrderRequest request) {
+    @PatchMapping("{orderId}")
+    public void updateOrder(@PathVariable Long orderId, @Valid @RequestBody UpdateOrderRequest request) {
         orderService.updateOrder(orderId, request);
     }
 }

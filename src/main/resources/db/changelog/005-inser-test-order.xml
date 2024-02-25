@@ -4,14 +4,25 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
 
     <changeSet id="005" author="Pavel Shutov">
-        <sql>INSERT INTO "ORDERS" (ORDER_NUMBER, SENDER_NAME, RECEIVER_NAME, SENDER_COUNTRY, SENDER_CITY,
-                                  SENDER_STREET, SENDER_HOUSE, SENDER_FLAT, SENDER_INDEX, RECEIVER_COUNTRY,
-                                  RECEIVER_CITY,
-                                  RECEIVER_STREET, RECEIVER_HOUSE, RECEIVER_FLAT, RECEIVER_INDEX, DATA_CREATE,
-                                  ORDER_STATUS,
-                                  USER_ID, COURIER_ID)
-             VALUES (54321, 'Vadim Smirnov', 'Petr Petrov', 'Belarus',
-                     'Gomel', 'Sovetskya', '456', '2', '123456', 'Belarus', 'Minsk', 'Borovai', '123',
-                     '1', '123478', '2024-02-13', 'IN_PROGRESS', 2, 2);</sql>
+        <insert tableName="ORDERS">
+            <column name="ORDER_NUMBER" valueNumeric="1234567"/>
+            <column name="SENDER_NAME" value="Vladimir Sobolev"/>
+            <column name="RECEIVER_NAME" value="Anton Antonov"/>
+            <column name="SENDER_COUNTRY" value="Belarus"/>
+            <column name="SENDER_CITY" value="Gomel"/>
+            <column name="SENDER_STREET" value="Mazurova"/>
+            <column name="SENDER_HOUSE" value="60"/>
+            <column name="SENDER_FLAT" value="100"/>
+            <column name="SENDER_INDEX" value="123456"/>
+            <column name="RECEIVER_COUNTRY" value="Belarus"/>
+            <column name="RECEIVER_CITY" value="Minsk"/>
+            <column name="RECEIVER_STREET" value="Vuzovskay"/>
+            <column name="RECEIVER_HOUSE" value="12"/>
+            <column name="RECEIVER_FLAT" value="44"/>
+            <column name="RECEIVER_INDEX" value="123678"/>
+            <column name="DATA_CREATE" valueDate="2024-02-13"/>
+            <column name="ORDER_STATUS" value="CREATED"/>
+            <column name="USER_ID" valueNumeric="1"/>
+        </insert>
     </changeSet>
 </databaseChangeLog>

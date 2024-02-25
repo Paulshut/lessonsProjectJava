@@ -2,12 +2,12 @@ package org.sds.delivery.repositories.orderRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.sds.delivery.entities.Order;
-import org.sds.delivery.entities.ParcelStatus;
+import org.sds.delivery.enums.ParcelStatus;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
-import static org.sds.delivery.entities.OrderStatus.*;
 import static org.sds.delivery.entities.QOrder.order;
 import static org.sds.delivery.entities.QParcel.parcel;
+import static org.sds.delivery.enums.OrderStatus.*;
 
 public class OrderRepositoryCustomImpl extends QuerydslRepositorySupport
 
@@ -19,8 +19,9 @@ public class OrderRepositoryCustomImpl extends QuerydslRepositorySupport
         super(Order.class);
         this.jpaQueryFactory = jpaQueryFactory;
     }
+
     @Override
-    public void updateOrderByUserIdAndOrderNumberAndStatusIn(Long userId, Integer orderNumber) {
+    public void updateOrderStatusByUserIdAndOrderNumberAndStatusInWorkOrCreated(Long userId, Integer orderNumber) {
         jpaQueryFactory.update(order)
                 .set(order.orderStatus, CANCELED)
                 .where(order.user.id.eq(userId)
@@ -29,7 +30,8 @@ public class OrderRepositoryCustomImpl extends QuerydslRepositorySupport
                 .execute();
     }
 
-    @Override public void updateOrderToInWork() {
+    @Override
+    public void updateOrderToInWorkWhenParcelStatusInRegistered() {
         jpaQueryFactory.update(order)
                 .set(order.orderStatus, IN_WORK)
                 .where(order.id.in(

@@ -2,8 +2,7 @@ package org.sds.delivery.repositories.parcelRepository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.sds.delivery.entities.Parcel;
-import org.sds.delivery.entities.ParcelStatus;
-import org.sds.delivery.entities.QParcel;
+import org.sds.delivery.enums.ParcelStatus;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.UUID;
@@ -18,6 +17,7 @@ public class ParcelRepositoryCustomImpl extends QuerydslRepositorySupport
         super(Parcel.class);
         this.jpaQueryFactory = jpaQueryFactory;
     }
+
     @Override
     public Integer deleteParcelByParcelNum(Long orderId, Integer parcelNumber) {
         jpaQueryFactory.delete(parcel)
@@ -27,14 +27,14 @@ public class ParcelRepositoryCustomImpl extends QuerydslRepositorySupport
                 .execute();
         return parcelNumber;
     }
+
     @Override
-    public Integer updateParcelByNumberAndStatusIN(Integer parcelNumber, UUID parcelLabel) {
+    public void updateParcelByNumberAndStatusInNotRegistered(Integer parcelNumber, UUID parcelLabel) {
         jpaQueryFactory.update(parcel)
                 .set(parcel.parcelStatus, ParcelStatus.REGISTERED)
                 .set(parcel.parcelLabel, parcelLabel)
                 .where(parcel.parcelNumber.eq(parcelNumber)
                         .and(parcel.parcelStatus.in(ParcelStatus.NOT_REGISTERED)))
                 .execute();
-        return parcelNumber;
     }
 }

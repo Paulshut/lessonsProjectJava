@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.sds.delivery.dto.requests.userRequest.CreateUserRequest;
 import org.sds.delivery.dto.requests.userRequest.UpdateUserRequest;
 import org.sds.delivery.dto.responses.userResponse.UserDeleteResponse;
-import org.sds.delivery.dto.responses.userResponse.UserResponse;
+import org.sds.delivery.dto.responses.userResponse.UserDto;
 import org.sds.delivery.dto.responses.userResponse.UserUpdateResponse;
 import org.sds.delivery.entities.User;
 import org.sds.delivery.exceptions.UserNotFoundException;
@@ -25,53 +25,52 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserResponse getUserById(Long id) {
-        User getUser = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id.toString()));
-        return userMapper.userToUserDTO(getUser);
+    public UserDto getUserById(Long userId) {
+        User getUser = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId.toString()));
+        return userMapper.mapUserToUserDTO(getUser);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public UserResponse getUserByLogin(String userLogin) {
+    public UserDto getUserByLogin(String userLogin) {
         User user = userRepository.getUserByLogin(userLogin)
                 .orElseThrow(() -> new UserNotFoundException(userLogin));
-        return userMapper.userToUserDTO(user);
+        return userMapper.mapUserToUserDTO(user);
     }
 
     @Override
     @Transactional
-    public UserResponse createUser(CreateUserRequest request) {
-        User user = userMapper.userDtoToUser(request);
+    public UserDto createUser(CreateUserRequest request) {
+        User user = userMapper.mapUserDtoToUser(request);
         User saveUser = userRepository.save(user);
-        return userMapper.userToUserDTO(saveUser);
+        return userMapper.mapUserToUserDTO(saveUser);
     }
 
     @Override
     @Transactional
-    public UserUpdateResponse updateUser(Long id, UpdateUserRequest request) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id.toString()));
-        userMapper.updateUserFromRequest(request, user);
-        userRepository.save(user);
-        return userMapper.userUpdateToUpdateResponse(id);
+    public UserUpdateResponse updateUser(Long userId, UpdateUserRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId.toString()));
+        userMapper.mapUpdateUserFromRequest(request, user);
+        return userMapper.mapUserUpdateToUpdateResponse(userId);
     }
 
     @Override
     @Transactional
-    public UserDeleteResponse deleteUser(Long id) {
+    public UserDeleteResponse deleteUser(Long userId) {
         User foundUser = userRepository
-                .findById(id)
-                .orElseThrow(() -> new UserNotFoundException(id.toString()));
+                .findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(userId.toString()));
         userRepository.delete(foundUser);
-        return userMapper.userToUserDeleteResponse(id);
+        return userMapper.mapUserToUserDeleteResponse(userId);
 
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserResponse> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return userMapper.usersToUserDTOs(users);
+        return userMapper.mapUsersToUserDTOs(users);
     }
 }

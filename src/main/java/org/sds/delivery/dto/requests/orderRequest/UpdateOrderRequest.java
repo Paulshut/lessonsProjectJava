@@ -4,8 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.sds.delivery.entities.Address;
-import org.sds.delivery.entities.OrderStatus;
+
 @Data
 public class UpdateOrderRequest {
     @NotBlank
@@ -16,12 +15,9 @@ public class UpdateOrderRequest {
 
     @Valid
     @NotNull
-    private Address senderAddress;
+    private AddressDto senderAddress;
 
     @Valid
     @NotNull
-    private Address receiverAddress;
-
-    @NotNull
-    private OrderStatus orderStatus;
+    private AddressDto receiverAddress;
 }

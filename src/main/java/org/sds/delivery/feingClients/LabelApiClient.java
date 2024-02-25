@@ -5,8 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "api-label", url = "${services.external.apiLabel.url}")
-public interface ApiLabelClient {
+@FeignClient(value = "label-api", url = "${services.external.labelApi.url}")
+public interface LabelApiClient {
 
     @GetMapping("/{number}")
     LabelNumberResponse getLabelNumber(@PathVariable Integer number);

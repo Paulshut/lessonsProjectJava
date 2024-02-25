@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sds.delivery.enums.RoleUser;
 
 import java.util.List;
 
 import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.GenerationType.*;
 
 @Data
 @Entity
@@ -18,8 +20,8 @@ import static jakarta.persistence.EnumType.STRING;
 @Table(name = "USERS")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "ID", nullable = false)
     private Long id;
     @Column(name = "LOGIN")
     private String login;
@@ -36,6 +38,6 @@ public class User {
     @Enumerated(STRING)
     private RoleUser roleUser;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Order> orders;
 }

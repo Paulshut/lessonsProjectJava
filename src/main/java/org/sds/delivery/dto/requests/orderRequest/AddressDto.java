@@ -1,6 +1,5 @@
 package org.sds.delivery.dto.requests.orderRequest;
 
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,18 +11,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateOrderRequest {
+public class AddressDto {
     @NotBlank
-    private String senderName;
+    private String country;
 
     @NotBlank
-    private String receiverName;
+    private String city;
 
-    @Valid
-    @NotNull
-    private AddressDto senderAddress;
+    @NotBlank
+    private String street;
 
-    @Valid
+    @NotBlank
+    private String house;
+
+    @NotBlank
+    private String flat;
+
     @NotNull
-    private AddressDto receiverAddress;
+    private Integer index;
 }

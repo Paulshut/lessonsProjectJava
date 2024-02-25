@@ -1,1 +1,1 @@
-# lessonsProjectJava
+# delivery application
